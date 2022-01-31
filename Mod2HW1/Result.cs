@@ -2,11 +2,13 @@
 {
     public class Result
     {
-        private bool _status;
-        private string _message;
+        private static bool _status;
+        private static string _message;
 
-        public Result()
+        public Result(bool status, string message)
         {
+            _status = status;
+            _message = message;
         }
 
         public bool Status
@@ -18,14 +20,7 @@
 
             set
             {
-                if (value)
-                {
-                    _status = true;
-                }
-                else
-                {
-                    _status = false;
-                }
+                _status = Status;
             }
         }
 

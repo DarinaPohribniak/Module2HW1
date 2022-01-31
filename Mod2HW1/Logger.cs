@@ -33,9 +33,14 @@ namespace Mod2HW1
 
         public void AddLog(EventType logType, string logMessage)
         {
-            string log = $"{DateTime.Now} {logType} {logMessage}\n";
+            string log = $"{DateTime.Now} {logType} {logMessage} \n";
             _logData = LogData + log;
-            Console.WriteLine(log);
+            Console.WriteLine($"\n {log}");
+        }
+
+        public void LogError(string errorMes)
+        {
+            AddLog(EventType.Error, $"Action failed by a reason: {errorMes}");
         }
     }
 }

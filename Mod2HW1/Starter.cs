@@ -1,17 +1,17 @@
 ﻿using System;
+using System.IO;
 
 namespace Mod2HW1
 {
     public class Starter
     {
         private static Actions actions = new Actions();
-
         public void Run()
         {
             int[] arr = GenerateArray();
-
+            Console.WriteLine();
             FindMetod(arr);
-            actions.ExportToFile();
+            ExportToFile();
         }
 
         public int[] GenerateArray()
@@ -22,6 +22,7 @@ namespace Mod2HW1
             for (int i = 0; i < arr.Length; i++)
             {
                 arr[i] = rnd.Next(1, 4);
+                Console.Write(arr[i] + " ");
             }
 
             return arr;
@@ -31,31 +32,30 @@ namespace Mod2HW1
         {
             for (int i = 0; i < arr.Length; i++)
             {
+                Result result = null;
                 if (arr[i] == 1)
                 {
-                    Result result1 = actions.FirstMetod();
-                    if (result1.Status == false)
-                    {
-                        actions.LogError(result1.Message);
-                    }
+                    result = actions.FirstMetod();
                 }
                 else if (arr[i] == 2)
                 {
-                    Result result2 = actions.SecondMetod();
-                    if (result2.Status == false)
-                    {
-                        actions.LogError(result2.Message);
-                    }
+                    result = actions.SecondMetod();
                 }
                 else if (arr[i] == 3)
                 {
-                    Result result3 = actions.ThirdMetod();
-                    if (result3.Status == false)
-                    {
-                        actions.LogError(result3.Message);
-                    }
+                    result = actions.ThirdMetod();
+                }
+
+                if (!result.Status)
+                {
+                    Logger.MyInstance.LogError(result.Message);
                 }
             }
+        }
+
+        private void ExportToFile()
+        {
+            File.WriteAllText("log.txt", Logger.MyInstance.LogData);
         }
     }
 }
